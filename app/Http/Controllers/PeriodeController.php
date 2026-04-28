@@ -14,7 +14,10 @@ class PeriodeController extends Controller
     {
         //akses model periode
         $result = periode::all(); //select * from periodes
-        dd($result);
+        //dd($result);
+        return view('periode.index', compact('result'));
+        
+        
 
     }
 
