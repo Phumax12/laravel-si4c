@@ -6,7 +6,7 @@ use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\BeritaController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
-    return view('welcome');
+    return view('fakultas.cretae');
 });
 
 Route::resource('/fakultas', FakultasController::class);
