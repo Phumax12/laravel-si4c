@@ -26,7 +26,7 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        //
+        return view('fakultas.create');
     }
 
     /**
@@ -34,7 +34,15 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'nama' => 'required|unique:fakultas',
+            'singkatan' => 'required',
+            'dekan' => 'required'
+        ]);
+
+        Fakultas::create($input);
+        
+        return redirect()->route('fakultas.index');
     }
 
     /**

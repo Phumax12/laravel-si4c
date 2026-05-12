@@ -354,6 +354,11 @@
                   <i class="nav-icon bi bi-palette"></i>
                   <p>program studi</p>
                 </a>
+                <li class="nav-item">
+                <a href="{{ url('periode') }}" class="nav-link">
+                  <i class="nav-icon bi bi-palette"></i>
+                  <p>periode</p>
+                </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
