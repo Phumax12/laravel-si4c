@@ -5,8 +5,9 @@
 
 
 @section('content')
-<h1>Data Prodi</h1>
+<a href="{{ route('prodi.create') }}" class="btn btn-primary mb-3">Tambah Program Studi</a>
 
+<h1>Data prodi</h1>
 <table class="table table-bordered table-hover">
     <tr>
         <th>No</th>
