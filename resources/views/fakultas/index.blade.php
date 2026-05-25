@@ -24,7 +24,7 @@
         <td>{{ $item->dekan }}</td>
         <td>
             <a href="{{ route('fakultas.edit', $item->id) }}" class="btn btn-warning btn-rounded">Edit</a>
-            <form method="POST" action="{{ route('fakultas.destroy', $item->id) }}">
+            <form method="POST" action="{{ route('fakultas.destroy', $item->id) }}" class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-xs btn-danger btn-rounded show_confirm"

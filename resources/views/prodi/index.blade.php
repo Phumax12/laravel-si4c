@@ -27,7 +27,8 @@
         <td>{{ $prodi->kaprodi }}</td>
         <td>{{ $prodi->fakultas->nama ?? '-' }}</td>
         <td>
-            <form method="POST" action="{{ route('prodi.destroy', $prodi->id) }}">
+            <a href="{{ route('prodi.edit', $prodi->id) }}" class="btn btn-warning btn-rounded">Edit</a>
+            <form method="POST" action="{{ route('prodi.destroy', $prodi->id) }}" class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-xs btn-danger btn-rounded show_confirm"

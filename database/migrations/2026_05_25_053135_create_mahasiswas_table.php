@@ -9,14 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('prodis', function (Blueprint $table) {
+        Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_prodi');
-            $table->char('singkatan', 2);
-            $table->string('kaprodi', 30);
-            $table->foreignId('fakultas_id')->constrained('fakultas')->onDelete('cascade');
+            $table->string('npm', 11);
+            $table->String('nama', 255);
+            $table->foreignId('prodi_id')->constrained('prodis')->onDelete('restrict');
+            $table->string('foto', 100)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prodis');
+        Schema::dropIfExists('mahasiswas');
     }
 };

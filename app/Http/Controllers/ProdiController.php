@@ -13,9 +13,10 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        
-    $prodis = Prodi::with('fakultas')->get();
-    return view('prodi.index', compact('prodis'));
+
+        $prodis = Prodi::with('fakultas')->get();
+
+        return view('prodi.index', compact('prodis'));
     }
 
     /**
@@ -24,6 +25,7 @@ class ProdiController extends Controller
     public function create()
     {
         $fakultas = Fakultas::all();
+
         return view('prodi.create', compact('fakultas'));
     }
 
@@ -35,8 +37,8 @@ class ProdiController extends Controller
         $input = $request->validate([
             'nama_prodi' => 'required|unique:prodis',
             'singkatan' => 'required|max:2',
-            'kaprodi'   => 'required',
-            'fakultas_id' => 'required'
+            'kaprodi' => 'required',
+            'fakultas_id' => 'required',
         ]);
 
         Prodi::create($input);
@@ -57,7 +59,10 @@ class ProdiController extends Controller
      */
     public function edit(Prodi $prodi)
     {
-        //
+        $fakultas = Fakultas::all();
+        // dd($prodi, $fakultas);
+
+        return view('prodi.edit', compact('prodi', 'fakultas'));
     }
 
     /**
@@ -65,17 +70,26 @@ class ProdiController extends Controller
      */
     public function update(Request $request, Prodi $prodi)
     {
-        //
+        $input = $request->validate([
+            'nama_prodi' => 'required|unique:prodis,nama_prodi,'.$prodi->id,
+            'singkatan' => 'required|max:2',
+            'kaprodi' => 'required',
+            'fakultas_id' => 'required',
+        ]);
+        $prodi->update($input);
+
+        return redirect()->route('prodi.index')->with('success', 'Data Prodi berhasil diedit');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $prodi)
+    public function destroy(Prodi $prodi)
     {
-        $prodi = Prodi::find($prodi);
+        // $prodi = Prodi::find($prodi);
         // dd($prodi);
         $prodi->delete();
+
         return redirect()->route('prodi.index')->with('success', 'Data Prodi berhasil dihapus');
     }
 }
