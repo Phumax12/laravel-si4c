@@ -4,39 +4,45 @@
 
 @section('content')
 
-<form action="{{ route('prodi.update', $prodi->id) }}" method="post">
+<form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="post" enctype="multipart/form-data">
     
     @method('PUT')
     @csrf
     <div class="form-group mb-3">
-        <label for="nama_prodi">nama prodi</label>
-        <input type="text" name="nama_prodi" class="form-control" value="{{ old ('nama_prodi') ?? $prodi->nama_prodi }}">
-        @error('nama_prodi')
+        <label for="npm">npm</label>
+        <input type="text" name="npm" class="form-control" value="{{ old ('npm') ?? $mahasiswa->npm }}">
+        @error('npm')
         <div class="text-danger">{{ $message }}</div>    
         @enderror
     </div>
     <div class="form-group">
-        <label for="singkatan">singkatan</label>
-        <input type="text" name="singkatan" class="form-control" value="{{ old ('singkatan') ?? $prodi->singkatan }}">
-        @error('singkatan')
+        <label for="nama">nama</label>
+        <input type="text" name="nama" class="form-control" value="{{ old ('nama') ?? $mahasiswa->nama }}">
+        @error('nama')
         <div class="text-danger">{{ $message }}</div>
         @enderror
     <div class="form-group">
-        <label for="kaprodi">Nama kaprodi</label>
-        <input type="text" name="kaprodi" class="form-control"value="{{ old ('kaprodi') ?? $prodi->kaprodi }}">
-        @error('kaprodi')
+        <label for="foto">foto</label>
+        <input type="file" name="foto" class="form-control"value="{{ old ('foto') ?? $mahasiswa->foto }}">
+        @error('foto')
         <div class="text-danger">{{ $message }}</div>
         @enderror
+       @if ($mahasiswa->foto)
+                <img src="{{ asset('storage/'.$mahasiswa->foto) }}" alt="foto" width="50">
+            @else
+            <span class="text-muted">tidak ada foto</span>
+                
+            @endif
     <div class="form-group">
-       <label for="fakultas_id" class="form-label">fakulta</label>
-            <select class="form-control" id="fakultas_id" name="fakultas_id">
-                <option value="">Pilih fakultas</option>
-                @foreach ($fakultas as $f)
-                <option value="{{ $f->id }}" {{ old('fakultas_id') == $f->id ? 'selected' : '' }}>{{ $f->nama}}</option>
+       <label for="prodi_id" class="form-label">prodi</label>
+            <select class="form-control" id="prodi_id" name="prodi_id">
+                <option value="">Pilih prodi</option>
+                @foreach ($prodis as $p)
+                <option value="{{ $p->id }}" {{ old('prodi_id') == $p->id ? 'selected' : '' }}>{{ $p->nama_prodi}}</option>
                     
                 @endforeach
             </select>
-            @error('fakultas_id')
+            @error('prodi_id')
             <div class="text-danger">{{ $message }}</div>
                 
             @enderror

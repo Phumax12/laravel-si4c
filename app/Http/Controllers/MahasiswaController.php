@@ -33,7 +33,25 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'npm' => 'required|unique:mahasiswas,npm',
+            'nama' => 'required',
+            'foto' => 'nullable|image|max:2048',
+            'prodi_id' => 'required|exists:prodis,id',
+        ]);
+
+        //uplod foto jika ada
+        if ($request->hasFile('foto')) {
+            //rename file dengan npm untuk menghindari duplikat nama file
+            $filename = $input['npm']. '.' . $request->file('foto')->getClientOriginalExtension();
+            $input['foto'] = $request->file('foto')->storeAs('fotos', $filename, 'public');
+        }else {
+            $input['foto'] = null; //set foto null jika tidak ada file yang diupload
+        }
+
+        Mahasiswa::create($input);
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan.');
     }
 
     /**
@@ -49,7 +67,8 @@ class MahasiswaController extends Controller
      */
     public function edit(Mahasiswa $mahasiswa)
     {
-        //
+        $prodis = Prodi::all();
+        return view('mahasiswa.edit', compact('mahasiswa', 'prodis'));
     }
 
     /**
@@ -57,7 +76,21 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
+        $input = $request->validate([
+            'npm' => 'required|unique:mahasiswas,npm,'.$mahasiswa->id,
+            'nama' => 'required',
+            'foto' => 'nullable|image|max:2048',
+            'prodi_id' => 'required|exists:prodis,id',
+        ]);
+        if ($request->hasFile('foto')) {
+            $filename = $input['npm']. '.' . $request->file('foto')->getClientOriginalExtension();
+            $input['foto'] = $request->file('foto')->storeAs('fotos', $filename, 'public');
+        }else {
+            $input['foto'] = $mahasiswa->foto; //jika tidak ada file baru, tetap gunakan foto lama
+        }
+
+        $mahasiswa->update($input);
+        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa berhasil diedit.');
     }
 
     /**
@@ -65,6 +98,7 @@ class MahasiswaController extends Controller
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->delete();
+        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa berhasil dihapus.');
     }
 }

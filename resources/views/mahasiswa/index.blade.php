@@ -27,7 +27,7 @@
         <td>{{ $mahasiswa->prodi->nama_prodi ?? '-' }}</td>
         <td>
             @if ($mahasiswa->foto)
-                <img src="{{ asset('storage/'.$mhs->foto) }}" alt="foto" width="50">
+                <img src="{{ asset('storage/'.$mahasiswa->foto) }}" alt="foto" width="50">
             @else
             <span class="text-muted">tidak ada foto</span>
                 
